@@ -6,7 +6,7 @@ services:
     plan: free
     autoDeploy: false
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    startCommand: python main.py
     envVars:
       - key: GOOGLE_API_KEY
         sync: false  # This will be set manually in the Render dashboard
