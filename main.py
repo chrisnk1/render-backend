@@ -937,12 +937,19 @@ if __name__ == "__main__":
     import uvicorn
     import os
     
-    PORT = int(os.getenv("PORT", 8008))
+    # Use the PORT environment variable provided by Render
+    PORT = int(os.getenv("PORT", "8000"))
     
     print(f"Starting Valkyry AI Service (RAG + Agent + General Chat)...")
+    print(f"Listening on port: {PORT}")
+    # Ensure directories exist
+    os.makedirs(TEMP_STORAGE_PATH, exist_ok=True)
+    os.makedirs(CHROMA_DB_PATH, exist_ok=True)
+    
     print(f"Temp Storage: {TEMP_STORAGE_PATH.resolve()}")
     print(f"ChromaDB Path: {CHROMA_DB_PATH.resolve()}")
     print(f"Google API Key: {'Yes' if GOOGLE_API_KEY else 'No!'}")
     print(f"ChromaDB Client: {'Initialized' if chroma_client else 'Failed!'}")
     
+    # Key change: disable reload in production and use the PORT env variable
     uvicorn.run("main:app", host="0.0.0.0", port=PORT, reload=False)
