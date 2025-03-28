@@ -617,7 +617,8 @@ async def chat_endpoint(request: ChatRequest, auth: dict = Depends(verify_token)
                         df, 
                         verbose=False, 
                         agent_executor_kwargs={"handle_parsing_errors": True}, 
-                        return_intermediate_steps=False
+                        return_intermediate_steps=False,
+                        allow_dangerous_code=True  # Add this parameter
                     )
                     
                     async for chunk in stream_agent_response(agent, request.query):
